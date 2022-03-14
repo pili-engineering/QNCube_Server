@@ -1,0 +1,280 @@
+{
+  "answer": {
+    "type": "single_choice/text/judge/multi_choice",
+    "score": 3,
+    "choice_list": [
+      "A",
+      "B",
+      "D"
+    ],
+    "judge": true,
+    "text": "<p>阿巴阿巴</p><img src='https://example.com/img1.png' />"
+  },
+  "question": {
+    "type": "single_choice/text/judge/multi_choice",
+    "score": 10,
+    "desc": "<p>巴拉巴拉</p><img src='https://example.com/img1.png' />",
+    "choice_list": [
+      "<p>A. 同长随机看运气</p>",
+      "<p>B. 三短一长选最短</p>",
+      "<p>C. 三长一短选最长</p>"
+    ]
+  },
+  "one": {
+    "examId": "aaa",
+    "name": "考试名称",
+    "startTime": 1640154115160,
+    "endTime": 1640154115160,
+    "type": "普通考试",
+    "desc": "测试数据",
+    "examinees": [
+      "aaa",
+      "bbb",
+      "ccc",
+      "ddd"
+    ],
+    "randomlyAssigned": true,
+    "papers": [
+      {
+        "name": "试卷A",
+        "questionList": [
+          "aaa",
+          "bbb",
+          "ccc"
+        ]
+      },
+      {
+        "name": "试卷B",
+        "questionList": [
+          "aaa",
+          "ccc",
+          "eee"
+        ]
+      }
+    ]
+  },
+  "two": {
+    "code": 200,
+    "message": "ok",
+    "data": [
+      {
+        "questionId": "aaa",
+        "type": "singleChoice",
+        "score": 10,
+        "desc": "巴拉巴拉",
+        "choiceList": [
+          "A. 同长随机看运气",
+          "B. 三短一长选最短",
+          "C. 三长一短选最长"
+        ]
+      }
+    ],
+    "requestId": "aaa"
+  },
+  "three": {
+    "code": 200,
+    "message": "ok",
+    "data": {
+      "result": false
+    },
+    "requestId": "aaa"
+  },
+  "four": {
+    "examId": "aaa"
+  },
+  "five": {
+    "examId": "aaa",
+    "answerList": [
+      {
+        "questionId": "bbb",
+        "type": "singleChoice",
+        "score": 3,
+        "choice_list": [
+          "A",
+          "B",
+          "D"
+        ],
+        "judge": true,
+        "text": "阿巴阿巴"
+      }
+    ]
+  },
+  "six": {
+    "paperName": "试卷A",
+    "totalScore": 100,
+    "questionAndAnswerList": [
+      {
+        "questionId": "aaa",
+        "question": {
+          "type": "singleChoice",
+          "score": 10,
+          "desc": "巴拉巴拉",
+          "choice_list": [
+            "A. 同长随机看运气",
+            "B. 三短一长选最短",
+            "C. 三长一短选最长"
+          ]
+        },
+        "answer": {
+          "type": "singleChoice",
+          "score": 3,
+          "choice_list": [
+            "A",
+            "B",
+            "D"
+          ],
+          "judge": true,
+          "text": "阿巴阿巴"
+        }
+      }
+    ]
+  },
+  "seven": {
+    "examId": "aaa",
+    "userId": "bbb",
+    "questionId": "ccc",
+    "score": 100
+  },
+  "eight": {
+    "questions": [
+      {
+        "questionId": "aaa",
+        "question": {
+          "type": "singleChoice",
+          "score": 10,
+          "desc": "巴拉巴拉",
+          "choiceList": [
+            "A. 同长随机看运气",
+            "B. 三短一长选最短",
+            "C. 三长一短选最长"
+          ],
+          "answer": {
+            "type": "singleChoice",
+            "score": 3,
+            "choiceList": [
+              "A",
+              "B",
+              "D"
+            ],
+            "judge": true,
+            "text": "阿巴阿巴"
+          }
+        }
+      }
+    ]
+  },
+  "ten": {
+    "examName": "语文考试1",
+    "bgnTime": "",
+    "endTime": "",
+    "duration": 16800,
+    "type": "普通考试",
+    "desc": "",
+    "creator": "aaa",
+    "examineeList": [
+      {
+        "examId": "bbb",
+        "userId": "ccc",
+        "examPaperId": "ddd",
+        "roomId": "eee",
+        "status": 1
+      }
+    ]
+  },
+  "eleven": {
+    "paperName": "试卷A",
+    "totalScore": 100,
+    "questionList": [
+      {
+        "questionId": "aaa",
+        "type": "singleChoice",
+        "score": 10,
+        "desc": "巴拉巴拉",
+        "choiceList": [
+          "A. 同长随机看运气",
+          "B. 三短一长选最短",
+          "C. 三长一短选最长"
+        ]
+      }
+    ]
+  },
+  "questionList": [
+    {
+      "questionId": "aaa",
+      "type": "singleChoice",
+      "score": 10,
+      "desc": "巴拉巴拉",
+      "choiceList": [
+        "A. 同长随机看运气",
+        "B. 三短一长选最短",
+        "C. 三长一短选最长"
+      ]
+    }
+  ],
+  "listTemplate": {
+    "total": 10,
+    "nextId": "aaa",
+    "cnt": 10,
+    "currentPageNum": 1,
+    "nextPageNum": 2,
+    "pageSize": 10,
+    "endPage": false,
+    "list": [
+      {
+        "examId": "",
+        "userId": "",
+        "event": {
+          "code": 1,
+          "msg": ""
+        },
+        "timestamp": 1
+      }
+    ]
+  },
+  "aaa": {
+    "examId": "",
+    "userId": "",
+    "event": {
+      "code": 1,
+      "msg": ""
+    }
+  },
+  "bbb": {
+    "examId": "",
+    "userId": "",
+    "event": {
+      "code": 1,
+      "msg": ""
+    },
+    "timestamp": 1
+  },
+  "ccc": {
+    "code": 200,
+    "message": "ok",
+    "data": {
+      "timestamp": 1642669798649,
+      "interval": 2000,
+      "list": [
+        {
+          "userId": "",
+          "event": {
+            "code": 1,
+            "msg": "",
+            "timestamp": 1642669798649
+          }
+        }
+      ]
+    },
+    "requestId": "aaa"
+  },
+  "1": {
+    "code": 200,
+    "message": "ok",
+    "data": {
+      "version": "",
+      "msg": "",
+      "package": ""
+    },
+    "requestId": "aaa"
+  }
+}
