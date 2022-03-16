@@ -46,7 +46,7 @@ type SmsCodeService struct {
 	xl         *xlog.Logger
 }
 
-func NewSmsCodeService(mongoURI string, database string, smsConfig *utils.SMSConfig, xl *xlog.Logger) (*SmsCodeService, error) {
+func NewSmsCodeService(mongoURI string, database string, config *utils.Config, xl *xlog.Logger) (*SmsCodeService, error) {
 	if xl == nil {
 		xl = xlog.New("niu-cube-sms-code-controller")
 	}
@@ -63,19 +63,19 @@ func NewSmsCodeService(mongoURI string, database string, smsConfig *utils.SMSCon
 		validateTimeout: SMSCodeDefaultValidateTimeout,
 		expireTimeout:   SMSCodeExpireTimeout,
 		randSource:      rand.NewSource(time.Now().UnixNano()),
-		fixedCodes:      smsConfig.FixedCodes,
+		fixedCodes:      config.SMS.FixedCodes,
 		xl:              xl,
 	}
 	// 创建短信发送器。
-	switch smsConfig.Provider {
+	switch config.SMS.Provider {
 	// 模拟的短信发送器，仅供测试使用。
 	case "test":
 		c.smsSender = &mockSmsSender{}
 	case "qiniu":
-		sender := NewQiniuSmsSender(smsConfig.QiniuSMS)
+		sender := NewQiniuSmsSender(config)
 		c.smsSender = sender
 	default:
-		xl.Errorf("unsupported SMS provider %s", smsConfig.Provider)
+		xl.Errorf("unsupported SMS provider %s", config.SMS.Provider)
 		return nil, fmt.Errorf("unsupported SMS provider")
 	}
 	return c, nil
@@ -91,15 +91,15 @@ func (m *mockSmsSender) SendSmsCode(xl *xlog.Logger, phone string, code string) 
 
 // QiniuSmsSender 七牛云短信发送器，对接七牛云短信平台发送验证码。
 type QiniuSmsSender struct {
-	conf    *utils.QiniuSMSConfig
+	conf    *utils.Config
 	manager *qiniusms.Manager
 }
 
 // NewQiniuSmsSender 创建七牛云短信发送器。
-func NewQiniuSmsSender(conf *utils.QiniuSMSConfig) *QiniuSmsSender {
+func NewQiniuSmsSender(conf *utils.Config) *QiniuSmsSender {
 	manager := qiniusms.NewManager(&qiniuauth.Credentials{
-		AccessKey: conf.KeyPair.AccessKey,
-		SecretKey: []byte(conf.KeyPair.SecretKey),
+		AccessKey: conf.QiniuKeyPair.AccessKey,
+		SecretKey: []byte(conf.QiniuKeyPair.SecretKey),
 	})
 	return &QiniuSmsSender{
 		conf:    conf,
@@ -110,8 +110,8 @@ func NewQiniuSmsSender(conf *utils.QiniuSMSConfig) *QiniuSmsSender {
 // SendMessage 发送验证码为code的短信。
 func (s *QiniuSmsSender) SendSmsCode(xl *xlog.Logger, phone string, code string) error {
 	_, err := s.manager.SendMessage(qiniusms.MessagesRequest{
-		SignatureID: s.conf.SignatureID,
-		TemplateID:  s.conf.TemplateID,
+		SignatureID: s.conf.SMS.QiniuSMS.SignatureID,
+		TemplateID:  s.conf.SMS.QiniuSMS.TemplateID,
 		Mobiles:     []string{phone},
 		Parameters:  map[string]interface{}{SMSCodeParamKey: code},
 	})

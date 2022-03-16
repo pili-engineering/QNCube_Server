@@ -7,6 +7,12 @@
 - [go 1.17+](https://go.dev/doc/install)
 - [mongodb 4.0+](https://docs.mongodb.com/manual/administration/install-community/)
 
+Go mod相关依赖包下载：
+
+``` shell
+cd niu-cube && go mod download
+```
+
 编译 & 运行
 
 ``` shell
@@ -20,6 +26,7 @@ cd niu-cube && go build && ./niu-cube
 - 排除端口占用之后，可能的报错包括配置文件不正确，依赖不正确等，如有此情况，请详细查看输出日志或与对接人员联系。
 - MongoDB我们建议不接收远程连接，并设置为无密码方式。
 - 配置文件所有必需项均无默认配置，因此所有**Mus**t开头的配置必须填写。
+- [跨域排查](https://segmentfault.com/a/1190000011145364)
 
 Go编译得到的为可执行二进制文件，直接通过shell运行即可。
 
@@ -30,7 +37,7 @@ Go编译得到的为可执行二进制文件，直接通过shell运行即可。
 ``` json5
 {
   "debug_level": 0,
-  "listen_addr": "<Must，服务器运行ip>:<Must，监听port>",
+  "listen_addr": 5080,
   "default_avatars": [
     "https://demo-qnrtc-files.qnsdk.com/img_avater_0.png",
     "https://demo-qnrtc-files.qnsdk.com/img_avater_1.png"
@@ -38,11 +45,11 @@ Go编译得到的为可执行二进制文件，直接通过shell运行即可。
   "welcome_image": "https://demo-qnrtc-files.qnsdk.com/welcome0510.png",
   "welcome_url": "https://www.qiniu.com",
   "cheating_event_log_file": "<Nullable，Pandora日志写入文件路径，用于在线考试场景>",
-  "dora_ai_ak": "<Nullable，朵拉AI的AK>",
-  "dora_ai_sk": "<Nullable，朵拉AI的SK>",
-  "dora_ai_app_id": "<Nullable，朵拉AI的AppId>",
-  "dora_sign_ak": "<Nullable，朵拉登录用AK>",
-  "dora_sign_sk": "<Nullable，朵拉登录用SK>",
+  "dora_ai_ak": "<Nullable，Dora AI的AK>",
+  "dora_ai_sk": "<Nullable，Dora AI的SK>",
+  "dora_ai_app_id": "<Nullable，Dora AI的AppId>",
+  "dora_sign_ak": "<Nullable，Dora登录用AK>",
+  "dora_sign_sk": "<Nullable，Dora登录用SK>",
   "pandora_config": {
     "pandora_host": "Nullable，https://pandora-express-sdk.qiniu.com",
     "pandora_username": "<Nullable，Pandora账号用户名>",
@@ -52,6 +59,10 @@ Go编译得到的为可执行二进制文件，直接通过shell运行即可。
     "uri": "mongodb://<Must，MongoDb的ip>:<Must，MongoDB的port>",
     "database": "<Must，你的数据库名称>"
   },
+  "qiniu_key_pair": {
+    "access_key": "<Must，你的七牛账号 AK>",
+    "secret_key": "<Must，你的七牛账号 SK>"
+  },
   "sms": {
     "provider": "qiniu",
     "fixed_codes": {
@@ -60,19 +71,11 @@ Go编译得到的为可执行二进制文件，直接通过shell运行即可。
       "10010": "8888"
     },
     "qiniu_sms": {
-      "key_pair": {
-        "access_key": "<Must，你的七牛账号 AK>",
-        "secret_key": "<Must，你的七牛账号 SK>"
-      },
       "signature_id": "<Must，你的短信签名ID>",
       "template_id": "<Must，你的短信模版ID>"
     }
   },
   "rtc": {
-    "key_pair": {
-      "access_key": "<Must，你的七牛账号 AK>",
-      "secret_key": "<Must，你的七牛账号 SK>"
-    },
     "app_id": "<Must，你的RTC AppId>",
     "room_token_expire_s": 86400,
     "play_back_url": "https://pili-playback.qnsdk.com",
@@ -281,6 +284,14 @@ Go编译得到的为可执行二进制文件，直接通过shell运行即可。
 #### IM接入
 
 参考链接：https://developer.qiniu.com/IM/8332/startim
+
+### Pandora接入
+
+参考链接：https://www.qiniu.com/products/pandora#access
+
+### Dora接入
+
+参考链接：https://developer.qiniu.com/dora/7409/face-verification-self-service-opening-operation-manual
 
 ### 项目结构
 

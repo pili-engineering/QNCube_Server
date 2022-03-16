@@ -26,12 +26,11 @@ import (
 	"github.com/solutions/niu-cube/internal/service/web/handler"
 	"github.com/solutions/niu-cube/internal/service/web/middleware"
 
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/qiniu/x/xlog"
 )
 
-// @title 互动直播API
+// NewRouter @title 互动直播API
 // @version 0.0.1
 // @description  http apis
 // @BasePath /v1
@@ -40,11 +39,8 @@ func NewRouter(config *utils.Config) (*gin.Engine, error) {
 	// 1. 初始化GIN
 	router := gin.New()
 	router.Use(gin.Recovery())
-	// 1.1 全局配置CORS跨域
-	corsConfig := cors.DefaultConfig()
-	corsConfig.AllowOrigins = []string{"*"}
-	corsConfig.AllowHeaders = []string{"Origin", "Content-Length", "Content-Type", "Authorization"}
-	router.Use(cors.New(corsConfig))
+	// 1.1. 全局CORS配置
+	router.Use(corsMiddleware())
 
 	// 2. 声明Service
 	// 2.1 全局配置Service
@@ -55,7 +51,7 @@ func NewRouter(config *utils.Config) (*gin.Engine, error) {
 	appConfigApiHandler := &handler.AppConfigApiHandler{}
 
 	// 2.2 账号Service
-	smsCodeService, err := cloud.NewSmsCodeService(config.Mongo.URI, config.Mongo.Database, config.SMS, nil)
+	smsCodeService, err := cloud.NewSmsCodeService(config.Mongo.URI, config.Mongo.Database, config, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -356,4 +352,18 @@ func returnNotFound(c *gin.Context) {
 	responseErr := model.NewResponseErrorNotFound()
 	resp := model.NewFailResponse(*responseErr)
 	c.JSON(http.StatusOK, resp)
+}
+
+func corsMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS, GET, PUT, DELETE, HEAD")
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(204)
+			return
+		}
+		c.Next()
+	}
 }

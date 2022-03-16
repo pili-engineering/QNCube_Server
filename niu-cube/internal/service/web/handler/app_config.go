@@ -66,7 +66,7 @@ func (h *AppConfigApiHandler) SolutionList(c *gin.Context) {
 }
 
 func (h *AppConfigApiHandler) KodoToken(c *gin.Context) {
-	token := cloud.GenkodoClientToken(utils.DefaultConf.RTC.KeyPair, utils.DefaultConf.Weixin.Bucket)
+	token := cloud.GenkodoClientToken(utils.DefaultConf.QiniuKeyPair, utils.DefaultConf.Weixin.Bucket)
 	res := map[string]interface{}{
 		"token": token,
 	}
@@ -82,7 +82,7 @@ func (h *AppConfigApiHandler) GetToken(c *gin.Context) {
 	c.Bind(&args)
 	content := args.Content
 	xl.Warnf("content:%v", content)
-	token := cloud.GetToken(utils.DefaultConf.RTC.KeyPair, content)
+	token := cloud.GetToken(utils.DefaultConf.QiniuKeyPair, content)
 	data := map[string]interface{}{
 		"token": token,
 	}

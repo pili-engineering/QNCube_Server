@@ -81,7 +81,7 @@ func main() {
 
 	errch := make(chan error, 1)
 	go func() {
-		httpServerErr := r.Run(utils.DefaultConf.ListenAddr)
+		httpServerErr := r.Run(fmt.Sprintf("127.0.0.1:%d", utils.DefaultConf.ListenPort))
 		errch <- httpServerErr
 	}()
 
