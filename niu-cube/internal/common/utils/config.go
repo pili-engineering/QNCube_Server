@@ -56,9 +56,8 @@ type QiniuKeyPair struct {
 
 // QiniuSMSConfig 七牛云短信配置。
 type QiniuSMSConfig struct {
-	KeyPair     QiniuKeyPair `json:"key_pair"`
-	SignatureID string       `json:"signature_id"`
-	TemplateID  string       `json:"template_id"`
+	SignatureID string `json:"signature_id"`
+	TemplateID  string `json:"template_id"`
 }
 
 // MailConfig 发送邮件的配置。
@@ -87,8 +86,7 @@ type SMSConfig struct {
 // Hub 直播空间名字
 // StreamPattern 流命名模式
 type QiniuRTCConfig struct {
-	KeyPair QiniuKeyPair `json:"key_pair"`
-	AppID   string       `json:"app_id"`
+	AppID string `json:"app_id"`
 	// RTC room token的有效时间。
 	RoomTokenExpireSecond int    `json:"room_token_expire_s"`
 	PlayBackURL           string `json:"play_back_url"`
@@ -102,7 +100,6 @@ type QiniuRTCConfig struct {
 
 // QiniuStorageConfig 七牛对象存储服务配置。
 type QiniuStorageConfig struct {
-	KeyPair QiniuKeyPair `json:"key_pair"`
 	// Bucket 上传的文件所在的七牛对象存储bucket。
 	Bucket string `json:"bucket"`
 	// URLPrefix 上传的文件的下载URL前缀，一般为该bucket对应的默认域名。
@@ -163,8 +160,8 @@ type PandoraConfig struct {
 // Config 后端配置。
 type Config struct {
 	// debug等级，为1时输出info/warn/error日志，为0除以上外还输出debug日志
-	DebugLevel int    `json:"debug_level"`
-	ListenAddr string `json:"listen_addr"`
+	DebugLevel int `json:"debug_level"`
+	ListenPort int `json:"listen_port"`
 	// 默认头像列表，用户新注册时随机从中选取一个作为初始头像。
 	DefaultAvatars []string `json:"default_avatars"`
 	// 请求默认host
@@ -181,6 +178,7 @@ type Config struct {
 	DoraSignSk           string          `json:"dora_sign_sk"`
 	PandoraConfig        PandoraConfig   `json:"pandora_config"`
 	Mongo                *MongoConfig    `json:"mongo"`
+	QiniuKeyPair         QiniuKeyPair    `json:"qiniu_key_pair"`
 	SMS                  *SMSConfig      `json:"sms"`
 	RTC                  *QiniuRTCConfig `json:"rtc"`
 	IM                   *IMConfig       `json:"im"`
@@ -195,7 +193,7 @@ type Config struct {
 func NewSample() *Config {
 	return &Config{
 		DebugLevel:     0,
-		ListenAddr:     ":8080",
+		ListenPort:     8080,
 		DefaultAvatars: []string{"1.jpg"},
 		Mongo: &MongoConfig{
 			URI:      "mongodb://localhost:27017",
@@ -204,19 +202,11 @@ func NewSample() *Config {
 		SMS: &SMSConfig{
 			Provider: "test",
 			QiniuSMS: &QiniuSMSConfig{
-				KeyPair: QiniuKeyPair{
-					AccessKey: os.Getenv("QINIU_ACCESS_KEY"),
-					SecretKey: os.Getenv("QINIU_SECRET_KEY"),
-				},
 				SignatureID: os.Getenv("QINIU_SMS_SIGN_ID"),
 				TemplateID:  os.Getenv("QINIU_SMS_TEMP_ID"),
 			},
 		},
 		RTC: &QiniuRTCConfig{
-			KeyPair: QiniuKeyPair{
-				AccessKey: os.Getenv("QINIU_ACCESS_KEY"),
-				SecretKey: os.Getenv("QINIU_SECRET_KEY"),
-			},
 			AppID:                 os.Getenv("QINIU_RTC_APP_ID"),
 			RoomTokenExpireSecond: 60,
 		},

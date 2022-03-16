@@ -149,7 +149,7 @@ func (w *WeixinService) GetAndUploadQRCode(interviewId string, interviewToken st
 		return "", err
 	}
 	w.xl.Infof("fetch qrcode of room %v successfully", interviewId)
-	err = upload(w.conf.Weixin.Bucket, w.conf.RTC.KeyPair, image, filekey, w.xl)
+	err = upload(w.conf.Weixin.Bucket, w.conf.QiniuKeyPair, image, filekey, w.xl)
 	if err != nil {
 		return "", err
 	}
@@ -170,7 +170,7 @@ func (w *WeixinService) UploadFile(file *multipart.FileHeader) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	err = upload(w.conf.Weixin.Bucket, w.conf.RTC.KeyPair, byteContainer, fileName, w.xl)
+	err = upload(w.conf.Weixin.Bucket, w.conf.QiniuKeyPair, byteContainer, fileName, w.xl)
 	if err != nil {
 		return "", err
 	}

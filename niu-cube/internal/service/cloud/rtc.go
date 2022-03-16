@@ -37,8 +37,8 @@ func NewRtcService(conf utils.Config) *RTCService {
 	r.conf = *conf.RTC
 	r.xl = xlog.New("rtc db")
 	r.signer = &qiniuauth.Credentials{
-		AccessKey: conf.RTC.KeyPair.AccessKey,
-		SecretKey: []byte(conf.RTC.KeyPair.SecretKey),
+		AccessKey: conf.QiniuKeyPair.AccessKey,
+		SecretKey: []byte(conf.QiniuKeyPair.SecretKey),
 	}
 	client := qiniurtc.NewManager(r.signer)
 	r.Manager = client
